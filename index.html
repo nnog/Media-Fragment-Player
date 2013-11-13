@@ -128,10 +128,10 @@
 				    	player_yt2.pause();
 			    	});
 			    	$("#play_yt2_btn").click(function(){
-				    	player_yt1.play();
+				    	player_yt2.play();
 			    	});
 			    	$("#mf_yt2_btn").click(function(){
-				    	player_yt1.playmf();
+				    	player_yt2.playmf();
 			    	});
 			    	$("#options_yt2_div").text(player_yt2.getOptions().mfURI).show();
 			    }
@@ -163,13 +163,13 @@
 			    	playerArr.push(player_sub);
 			    	$("#controls_sub_div").show();	
 			    	$("#pause_sub_btn").click(function(){
-				    	player_yt2.pause();
+				    	player_sub.pause();
 			    	});
 			    	$("#play_sub_btn").click(function(){
-				    	player_yt1.play();
+				    	player_sub.play();
 			    	});
 			    	$("#mf_sub_btn").click(function(){
-				    	player_yt1.playmf();
+				    	player_sub.playmf();
 			    	});
 			    	var srts = "Available subtitles:";
 			    	$.each(tracks,function(idx,track){
