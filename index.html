@@ -177,6 +177,43 @@
 			    	});
 			    	$("#options_sub_div").text(srts).show();
 			    }
+
+			    //dynamically setting mfjson (#t=00:01:30,00:01:33&xywh=40,220,200,50)
+			    var mfuri_yt1_nomf = "http://www.youtube.com/watch?v=Ug6XAw6hzaw";
+		    	var player_dyn = $("#player_dyn_div").smfplayer({
+		    		mfURI:mfuri_yt1_nomf, 
+		    		mfAlwaysEnabled:false,
+		    		autoStart:false,
+		    		width:480,
+		    		height:320,
+		    		success:function(mediaElement,domObject,p){
+			    		mediaElement.addEventListener('timeupdate', function(e){
+				    		var ct = mediaElement.currentTime;
+				    		$("#currenttime_dyn_span").text(ct);
+			    		});
+                        console.log("Dyn: Successful init");
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+                        console.log("Dyn: setting MFJson 90, 93, 40, 10, 40, 60");
+                        console.log($('#player_dyn_div').smfplayer().setMF(90, 93, 40, 10, 40, 60));
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+		    		}
+		    	});
+		    			    	
+		    	if(player_dyn !== undefined)
+			    {
+			    	playerArr.push(player_dyn);
+			    	$("#controls_dyn_div").show();	
+			    	$("#pause_dyn_btn").click(function(){
+				    	player_dyn.pause();
+			    	});
+			    	$("#play_dyn_btn").click(function(){
+				    	player_dyn.play();
+			    	});
+			    	$("#mf_dyn_btn").click(function(){
+				    	player_dyn.playmf();
+			    	});
+			    	$("#options_dyn_div").text(player_dyn.getOptions().mfURI).show();
+			    }
     	});
     </script>
     
@@ -243,6 +280,21 @@
 		        	<div style="display:inline;">CurrentTime:<span id="currenttime_sub_span"></span></div>
 	        	</div>
 	        	<div id="options_sub_div" style="display:none"></div>
+	      	</div>
+        </div>
+        <h2>YouTube - Dynamically Setting MFJson</h2>
+        <div class="row-fluid">
+	        <div class="span11 offset1">
+	        	<div id="player_dyn_div">
+		        	
+	        	</div>
+	        	<div id="controls_dyn_div" style="display:none;">
+		        	<button class="btn" id="play_dyn_btn">Play</button>
+		        	<button class="btn" id="pause_dyn_btn">Pause</button>
+		        	<button class="btn" id="mf_dyn_btn">Play MF</button>
+		        	<div style="display:inline;">CurrentTime:<span id="currenttime_dyn_span"></span></div>
+	        	</div>
+	        	<div id="options_dyn_div" style="display:none"></div>
 	      	</div>
         </div>
     </div> <!-- /container -->

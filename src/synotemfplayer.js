@@ -231,6 +231,33 @@
 			{
 				return $(this).data('smfplayer').mfjson;
 			};
+
+			this.setMFJson = function(mfjson)
+			{
+				$(this).data('smfplayer').mfjson = mfjson;
+			};
+
+            //accepts pre-normalized media fragment values (npt time, percent space)
+			this.setMF = function(st, et, x, y, w, h)
+			{
+                var timeUnit = 'npt';
+                var spaceUnit = 'percent';
+                if(st !== undefined && st >= 0) {
+				    $(this).data('smfplayer').mfjson.hash.t = [{
+                        'unit':timeUnit,
+                        'start':st,
+                        'end':et,
+                        'startNormalized':st,
+                        'endNormalized':et
+                    }]
+                }
+                if(x !== undefined && x >= 0 && y !== undefined && y >= 0) {
+				    $(this).data('smfplayer').mfjson.hash.xywh = [{
+                        'unit':spaceUnit,
+                        'x':x, 'y':y, 'w':w, 'h':h
+                    }]
+                }
+			};
 			
 			//get the original mejs player
 			this.getMeplayer = function()
