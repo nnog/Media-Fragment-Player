@@ -17,12 +17,12 @@
 	};
 				  
 	var methods = {
-     	init : function( options ) {
-     		
-	     	var self = this; ///save the instance of current smfplayer object
+	 	init : function( options ) {
+	 		
+		 	var self = this; ///save the instance of current smfplayer object
 
-           	/*----------Declare public functions---------------------*/
-           	this.pause = function(){
+		   	/*----------Declare public functions---------------------*/
+		   	this.pause = function(){
 				
 				if(VERBOSE)
 					console.log("pause");
@@ -63,8 +63,8 @@
 				if(!$.isEmptyObject(data.mfjson.hash))
 				{
 					var tObj = smfplayer.utils.getTemporalMF(data.mfjson.hash.t[0]);
-		           	st = tObj.st;
-		           	et = tObj.et;
+				   	st = tObj.st;
+				   	et = tObj.et;
 				}
 				
 				var player = $(this).data('smfplayer').smfplayer;
@@ -78,8 +78,8 @@
 				data.mfreplay = true;
 			};
 
-            //Play media fragment, then clear it when done (optionally set MF dynamically first)
-            this.playmfonce = function(st, et, x, y, w, h) {
+			//Play media fragment, then clear it when done (optionally set MF dynamically first)
+			this.playmfonce = function(st, et, x, y, w, h) {
 				var data = $(this).data('smfplayer');
 				if(data === undefined)
 				{
@@ -87,13 +87,13 @@
 					return;
 				}
 
-                if(arguments.length) {
-                    self.setMF(st, et, x, y, w, h);
-                }
-                self.playmf();
-                //Clear fragment when outside fragment period
-                data.mfclearafterreplay = true;
-            }
+				if(arguments.length) {
+					self.setMF(st, et, x, y, w, h);
+				}
+				self.playmf();
+				//Clear fragment when outside fragment period
+				data.mfclearafterreplay = true;
+			}
 
 			this.showxywh = function(xywh)
 			{
@@ -117,41 +117,41 @@
 				var spatial_div;
 				if(data.settings.xywhoverlay === undefined) //the overlay hasn't been created
 				{			
-		           	this.addClass('smfplayer-container');
-		           	//var cssStr = "top:"+x+";left:"+y+";width:"+w+";height:"+h+";";
-		           	spatial_div = $("<div/>");
-		           	spatial_div.css(data.settings.spatialStyle);
-		           	spatial_div.addClass('smfplayer-overlay').appendTo(this);
+				   	this.addClass('smfplayer-container');
+				   	//var cssStr = "top:"+x+";left:"+y+";width:"+w+";height:"+h+";";
+				   	spatial_div = $("<div/>");
+				   	spatial_div.css(data.settings.spatialStyle);
+				   	spatial_div.addClass('smfplayer-overlay').appendTo(this);
 	
-		           	data.settings.xywhoverlay =  spatial_div;
-			    }
-			    else
-			    {
-				    spatial_div = data.settings.xywhoverlay;
-			    }
-			    
-			    //console.log(xywh);
-			    
-		    	var unit = xywh.unit;
-		           		x = xywh.x,
-		           		y = xywh.y,
-		           		w = xywh.w,
-		           		h = xywh.h;
-		           	
-	           	//unit is 'pixal' or 'percent'	
-	           	if(unit === 'percent')
-	           	{
-		           	//var wratio = data.settings.width/data.settings.originalWidth;
-		           	//var hratio = data.settings.height/data.settings.originalHeight;
-		           	
-		           	x=Math.floor((x/100)*data.settings.width);
-		           	w=Math.floor((w/100)*data.settings.width);
-		           	y=Math.floor((y/100)*data.settings.height);
-		           	h=Math.floor((h/100)*data.settings.height);
-	           	}
-	           	
-	           	spatial_div.css({'width':w,'height':h,'top':y+'px','left':x+'px'});
-	           	spatial_div.show();
+				   	data.settings.xywhoverlay =  spatial_div;
+				}
+				else
+				{
+					spatial_div = data.settings.xywhoverlay;
+				}
+				
+				//console.log(xywh);
+				
+				var unit = xywh.unit;
+				   		x = xywh.x,
+				   		y = xywh.y,
+				   		w = xywh.w,
+				   		h = xywh.h;
+				   	
+			   	//unit is 'pixal' or 'percent'	
+			   	if(unit === 'percent')
+			   	{
+				   	//var wratio = data.settings.width/data.settings.originalWidth;
+				   	//var hratio = data.settings.height/data.settings.originalHeight;
+				   	
+				   	x=Math.floor((x/100)*data.settings.width);
+				   	w=Math.floor((w/100)*data.settings.width);
+				   	y=Math.floor((y/100)*data.settings.height);
+				   	h=Math.floor((h/100)*data.settings.height);
+			   	}
+			   	
+			   	spatial_div.css({'width':w,'height':h,'top':y+'px','left':x+'px'});
+			   	spatial_div.show();
 			};
 			
 			this.hidexywh = function()
@@ -255,39 +255,39 @@
 				$(this).data('smfplayer').mfjson = mfjson;
 			};
 
-            //accepts pre-normalized media fragment values (npt time, percent space)
+			//accepts pre-normalized media fragment values (npt time, percent space)
 			this.setMF = function(st, et, x, y, w, h)
 			{
-                var timeUnit = 'npt';
-                var spaceUnit = 'percent';
-                if(st !== undefined && st >= 0) {
-				    $(this).data('smfplayer').mfjson.hash.t = [{
-                        'unit':timeUnit,
-                        'start':st,
-                        'end':et,
-                        'startNormalized':st,
-                        'endNormalized':et
-                    }]
-                }
-                if(x !== undefined && x >= 0 && y !== undefined && y >= 0) {
-                    $(this).data('smfplayer').mfjson.hash.xywh = [{
-                        'unit':spaceUnit,
-                        'x':x, 'y':y, 'w':w, 'h':h
-                    }]
-                }
+				var timeUnit = 'npt';
+				var spaceUnit = 'percent';
+				if(st !== undefined && st >= 0) {
+					$(this).data('smfplayer').mfjson.hash.t = [{
+						'unit':timeUnit,
+						'start':st,
+						'end':et,
+						'startNormalized':st,
+						'endNormalized':et
+					}]
+				}
+				if(x !== undefined && x >= 0 && y !== undefined && y >= 0) {
+					$(this).data('smfplayer').mfjson.hash.xywh = [{
+						'unit':spaceUnit,
+						'x':x, 'y':y, 'w':w, 'h':h
+					}]
+				}
 			};
 
-            //clears the Media fragment regardless if playing it or not
-            this.clearMF = function()
-            {
-                if($(this).data('smfplayer') === undefined) {
-                    return false;
-                }
-                $(this).data('smfplayer').mfreplay = false;
-                $(this).data('smfplayer').mfjson.hash = {};
-                self.hidexywh();
-                return true;
-            }
+			//clears the Media fragment regardless if playing it or not
+			this.clearMF = function()
+			{
+				if($(this).data('smfplayer') === undefined) {
+					return false;
+				}
+				$(this).data('smfplayer').mfreplay = false;
+				$(this).data('smfplayer').mfjson.hash = {};
+				self.hidexywh();
+				return true;
+			}
 			
 			//get the original mejs player
 			this.getMeplayer = function()
@@ -308,249 +308,249 @@
 			}
 			
 			/*-----------Public attributes declaration ends----------------*/
-           	
-	     	//console.log("before each");  
-	     	//console.log(this);		     			     	
-	     	return this.each(function(){
-         
-		     	var $this = $(this);
+		   	
+		 	//console.log("before each");  
+		 	//console.log(this);			 				 	
+		 	return this.each(function(){
+		 
+			 	var $this = $(this);
 				var data = $this.data('smfplayer');
 				
 				//console.log("each");
 				//console.log(data);
-                     
-		     	// If the plugin hasn't been initialized yet
-		     	if ( data === undefined ) {
-		     	
-			     	if(VERBOSE)
-			     		console.log("init smfplayer data");
+					 
+			 	// If the plugin hasn't been initialized yet
+			 	if ( data === undefined ) {
+			 	
+				 	if(VERBOSE)
+				 		console.log("init smfplayer data");
 
-			     	var settings = $.extend({},defaults,options);
-	     			if(settings.mfURI === undefined)
-           			{
-           				console.error("mfURI cannot be null!");
-           				return false;
-           			}
+				 	var settings = $.extend({},defaults,options);
+		 			if(settings.mfURI === undefined)
+		   			{
+		   				console.error("mfURI cannot be null!");
+		   				return false;
+		   			}
 
-           			//parse media fragment
-		           	var mfjson = MediaFragments.parseMediaFragmentsUri(settings.mfURI);
-		           	//if(VERBOSE)
-				    //      console.log(mfjson);
+		   			//parse media fragment
+				   	var mfjson = MediaFragments.parseMediaFragmentsUri(settings.mfURI);
+				   	//if(VERBOSE)
+					//	  console.log(mfjson);
 
-				    settings.success = function(mediaElement,domObject,p){
-	     			     				
-	     				if(VERBOSE)
+					settings.success = function(mediaElement,domObject,p){
+		 				 				
+		 				if(VERBOSE)
 							console.log("smfplayer init success.");
 						
-				        
-				        if(settings.autoStart === true)
-				        {
-					        if(mediaElement.pluginType == 'flash')
-					        {
-						        mediaElement.addEventListener('canplay',function(e){
-						        	if(VERBOSE)
-						        		console.log("canplay");
-						        	mediaElement.play();
-						        		
-						        	if($(self).data('smfplayer') === undefined)	
-						        		setTimeout(function(){
-								        		var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
-								        		self.setPosition(lazyObj.st*1000);
-									        	if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
-									        		self.showxywh(lazyObj.xywh);
-								        	},100);
-							        else
-							        {
-							        	var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
-						        		self.setPosition(lazyObj.st*1000);
-							        	if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
-							        		self.showxywh(lazyObj.xywh);	
-							        }
-						        		
-						        },false);
-					        }
-					        else
-					        {
-					        	mediaElement.play();
-					        	
-					        	if($(self).data('smfplayer') === undefined)	
-						        	setTimeout(function(){
-							        	var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
-						        		self.setPosition(lazyObj.st*1000);
-							        	if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
-							        		self.showxywh(lazyObj.xywh);
-						        	},100);
-						        else
-						        {
-						        	var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
-					        		self.setPosition(lazyObj.st*1000);
-						        	if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
-						        		self.showxywh(lazyObj.xywh);
-						        }
-							       
-					        }
-				        }
-				        
-				        mediaElement.addEventListener('timeupdate', function(e) {
 						
-					        var currentTime = mediaElement.currentTime;
-					        var data = $(self).data('smfplayer');
-					        
-					        if(data === undefined)
-					        {
-						        return;
-					        }
-					        
-					        var lazyObj = getMfjsonLazy(data.mfjson);
-					        var st = lazyObj.st;
-					        var et = lazyObj.et;
-					        var xywh = lazyObj.xywh;
-					        
-					        //console.log("ct:"+currentTime);			        
-					        if(currentTime < et && currentTime>st)
-					        {
-						        if(data !== undefined)
-						        {
-							        if( !$.isEmptyObject(xywh) && data.settings.spatialEnabled === true)
-							        {
-							        	if(data.settings.xywhoverlay === undefined || !data.settings.xywhoverlay.is(':visible'))
-							        	{
-								        	self.showxywh(xywh);
-								        }
-								    }
-						        }
-						        if(data.setPositionLock === true)
-						        {
-						        	//console.log("true:"+currentTime);  	
-						        	data.setPositionLock = false;
-						        }
-						    }
-					        else
-					        {
-						        if(data.settings.xywhoverlay !== undefined && data.settings.xywhoverlay.is(':visible'))
-						        {
-						        	self.hidexywh();
-						        }
-						        
-						        if(data.mfreplay === true || settings.mfAlwaysEnabled === true)
-						        {
-						            if(currentTime>et)
-						            {
-                                        mediaElement.pause();
-                                        if(data.mfclearafterreplay) {
-                                            self.clearMF();
-                                            data.mfclearafterreplay = false;
-                                        } else {
-                                            self.setPosition(et*1000);
-                                        }
-                                        data.mfreplay = false;
-						            }
-						            else if(currentTime < st)
-						            {
-                                        if(data.mfclearafterreplay) {
-                                            self.clearMF();
-                                            data.mfclearafterreplay = false;
-                                        } else if(data.setPositionLock === false) {
-                                            self.setPosition(st*1000);
-                                            data.setPositionLock = true;
-                                        }
-						            }
-						        }
-					        }
-			        				             
-					    }, false);
-				        
-				        mediaElement.addEventListener('play', function(e) {
-					        
-					        var currentTime = mediaElement.currentTime;
-					        var data = $(self).data('smfplayer');
-					        
-					        if(data === undefined)
-					        {
-						        return;
-					        }
-					        var lazyObj = getMfjsonLazy(data.mfjson);
-					        var st = lazyObj.st;
-					        var et = lazyObj.et;
-					     						        
-					        if(data.mfreplay === true)
-					        {
-					            //console.log("mfreplay:"+currentTime); //add a flag as autostart finished
-					            if(currentTime < st)
-					            {
-						            //console.log("setposition:"+st+"::"+setPositionLock);
-						            if(data.setPositionLock === false)
-						            {
-						            	self.setPosition(st*1000);
-						            	data.setPositionLock = true;
-						            }
-                                    if(data.mfclearafterreplay) {
-                                        self.clearMF();
-                                        data.mfclearafterreplay = false;
-                                    }
-					            }
-					            else if(currentTime>et)
-					            {
-						            //console.log("no:"+et+"::"+setPositionLock);
-						            if(data.setPositionLock === false)
-						            {
-						            	self.setPosition(et*1000);
-						            	data.setPositionLock = true;
-						            	mediaElement.pause();
-						            	data.mfreplay = false;
-						            }
-                                    if(data.mfclearafterreplay) {
-                                        self.clearMF();
-                                        data.mfclearafterreplay = false;
-                                    }
-					            }
-					        }
-					        
-				        },false);
+						if(settings.autoStart === true)
+						{
+							if(mediaElement.pluginType == 'flash')
+							{
+								mediaElement.addEventListener('canplay',function(e){
+									if(VERBOSE)
+										console.log("canplay");
+									mediaElement.play();
+										
+									if($(self).data('smfplayer') === undefined)	
+										setTimeout(function(){
+												var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
+												self.setPosition(lazyObj.st*1000);
+												if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
+													self.showxywh(lazyObj.xywh);
+											},100);
+									else
+									{
+										var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
+										self.setPosition(lazyObj.st*1000);
+										if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
+											self.showxywh(lazyObj.xywh);	
+									}
+										
+								},false);
+							}
+							else
+							{
+								mediaElement.play();
+								
+								if($(self).data('smfplayer') === undefined)	
+									setTimeout(function(){
+										var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
+										self.setPosition(lazyObj.st*1000);
+										if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
+											self.showxywh(lazyObj.xywh);
+									},100);
+								else
+								{
+									var lazyObj = getMfjsonLazy($(self).data('smfplayer').mfjson);
+									self.setPosition(lazyObj.st*1000);
+									if( !$.isEmptyObject(lazyObj.xywh) && $(self).data('smfplayer').settings.spatialEnabled === true)
+										self.showxywh(lazyObj.xywh);
+								}
+								   
+							}
+						}
+						
+						mediaElement.addEventListener('timeupdate', function(e) {
+						
+							var currentTime = mediaElement.currentTime;
+							var data = $(self).data('smfplayer');
+							
+							if(data === undefined)
+							{
+								return;
+							}
+							
+							var lazyObj = getMfjsonLazy(data.mfjson);
+							var st = lazyObj.st;
+							var et = lazyObj.et;
+							var xywh = lazyObj.xywh;
+							
+							//console.log("ct:"+currentTime);					
+							if(currentTime < et && currentTime>st)
+							{
+								if(data !== undefined)
+								{
+									if( !$.isEmptyObject(xywh) && data.settings.spatialEnabled === true)
+									{
+										if(data.settings.xywhoverlay === undefined || !data.settings.xywhoverlay.is(':visible'))
+										{
+											self.showxywh(xywh);
+										}
+									}
+								}
+								if(data.setPositionLock === true)
+								{
+									//console.log("true:"+currentTime);  	
+									data.setPositionLock = false;
+								}
+							}
+							else
+							{
+								if(data.settings.xywhoverlay !== undefined && data.settings.xywhoverlay.is(':visible'))
+								{
+									self.hidexywh();
+								}
+								
+								if(data.mfreplay === true || settings.mfAlwaysEnabled === true)
+								{
+									if(currentTime>et)
+									{
+										mediaElement.pause();
+										if(data.mfclearafterreplay) {
+											self.clearMF();
+											data.mfclearafterreplay = false;
+										} else {
+											self.setPosition(et*1000);
+										}
+										data.mfreplay = false;
+									}
+									else if(currentTime < st)
+									{
+										if(data.mfclearafterreplay) {
+											self.clearMF();
+											data.mfclearafterreplay = false;
+										} else if(data.setPositionLock === false) {
+											self.setPosition(st*1000);
+											data.setPositionLock = true;
+										}
+									}
+								}
+							}
+												 
+						}, false);
+						
+						mediaElement.addEventListener('play', function(e) {
+							
+							var currentTime = mediaElement.currentTime;
+							var data = $(self).data('smfplayer');
+							
+							if(data === undefined)
+							{
+								return;
+							}
+							var lazyObj = getMfjsonLazy(data.mfjson);
+							var st = lazyObj.st;
+							var et = lazyObj.et;
+						 								
+							if(data.mfreplay === true)
+							{
+								//console.log("mfreplay:"+currentTime); //add a flag as autostart finished
+								if(currentTime < st)
+								{
+									//console.log("setposition:"+st+"::"+setPositionLock);
+									if(data.setPositionLock === false)
+									{
+										self.setPosition(st*1000);
+										data.setPositionLock = true;
+									}
+									if(data.mfclearafterreplay) {
+										self.clearMF();
+										data.mfclearafterreplay = false;
+									}
+								}
+								else if(currentTime>et)
+								{
+									//console.log("no:"+et+"::"+setPositionLock);
+									if(data.setPositionLock === false)
+									{
+										self.setPosition(et*1000);
+										data.setPositionLock = true;
+										mediaElement.pause();
+										data.mfreplay = false;
+									}
+									if(data.mfclearafterreplay) {
+										self.clearMF();
+										data.mfclearafterreplay = false;
+									}
+								}
+							}
+							
+						},false);
 
-				        
-				        if(options.success !== undefined)
-				        {
-					        return options.success.call(this, mediaElement,domObject);
-				        }
-				        else
-				        	return;
-	     			};
-	     	
-			     	settings.error = function()
-			     	{
-				    	 if(options.error !== undefined)
-				    	 {
-					        	return options.error.call(this);
-					     }
-				         else
-				        		return;	
-			     	}; 
+						
+						if(options.success !== undefined)
+						{
+							return options.success.call(this, mediaElement,domObject);
+						}
+						else
+							return;
+		 			};
+		 	
+				 	settings.error = function()
+				 	{
+						 if(options.error !== undefined)
+						 {
+								return options.error.call(this);
+						 }
+						 else
+								return;	
+				 	}; 
   
-		           	var videosrc = settings.mfURI;
-		           	//remove the hash for the url
-		           	if(!$.isEmptyObject(mfjson.hash)){
-			           	var indexOfHash = settings.mfURI.indexOf('#');
-			           	videosrc = indexOfHash !== -1? settings.mfURI.substring(0,indexOfHash) : settings.mfURI;
-		           	}
-		           	
-		           	if(VERBOSE)
-		           		console.log(videosrc);
-		           	
+				   	var videosrc = settings.mfURI;
+				   	//remove the hash for the url
+				   	if(!$.isEmptyObject(mfjson.hash)){
+					   	var indexOfHash = settings.mfURI.indexOf('#');
+					   	videosrc = indexOfHash !== -1? settings.mfURI.substring(0,indexOfHash) : settings.mfURI;
+				   	}
+				   	
+				   	if(VERBOSE)
+				   		console.log(videosrc);
+				   	
 					var mm;
 					if(settings.isVideo === false)
 					{
-			       		mm = $("<audio/>").prop("width",settings.width).prop("height",settings.height).prop('preload','auto').appendTo($this);
-			       	}
-			       	else
-			       	{
-			          	mm = $("<video/>").prop("width",settings.width).prop("height",settings.height).prop('preload','auto').appendTo($this);
-			        }
-			        var mmSource = $("<source/>").prop("src",videosrc).appendTo(mm);
-			        
-			        //Decide the type of the video or audio
-			        if(smfplayer.utils.isYouTubeURL(settings.mfURI))
-		           	{
+				   		mm = $("<audio/>").prop("width",settings.width).prop("height",settings.height).prop('preload','auto').appendTo($this);
+				   	}
+				   	else
+				   	{
+					  	mm = $("<video/>").prop("width",settings.width).prop("height",settings.height).prop('preload','auto').appendTo($this);
+					}
+					var mmSource = $("<source/>").prop("src",videosrc).appendTo(mm);
+					
+					//Decide the type of the video or audio
+					if(smfplayer.utils.isYouTubeURL(settings.mfURI))
+				   	{
 						mmSource.prop("type","video/x-youtube");
 					}
 					else if(smfplayer.utils.isDailyMotionURL(settings.mfURI))
@@ -588,47 +588,47 @@
 							}
 						}
 					} 
-		           
-		           	//init tracks
-		           	$.each(settings.tracks,function(idx, trackObj){
-		           		var track = $("<track/>").appendTo(mm);
-		           		track.prop("srclang",trackObj.srclang).prop("kind",trackObj.kind).prop("type",trackObj.type).prop("src",trackObj.src);
-		           	});
-		           		           
-		           		           
-		           //call mediaelemntjs
-		           var meplayer = new MediaElementPlayer(mm.get(0),settings);
-		           //console.log(meplayer);
-		           $this.data('smfplayer', {
-			           	target : $this,
-			           	smfplayer : meplayer,
-			           	settings:settings,
-			           	mfjson:mfjson,
-			           	mfreplay:true,//replay the mf when the video starts, but the mf will only be replayed once
-                        mfclearafterreplay:false, //used for playmfonce to clear fragment after replaying
+				   
+				   	//init tracks
+				   	$.each(settings.tracks,function(idx, trackObj){
+				   		var track = $("<track/>").appendTo(mm);
+				   		track.prop("srclang",trackObj.srclang).prop("kind",trackObj.kind).prop("type",trackObj.type).prop("src",trackObj.src);
+				   	});
+				   				   
+				   				   
+				   //call mediaelemntjs
+				   var meplayer = new MediaElementPlayer(mm.get(0),settings);
+				   //console.log(meplayer);
+				   $this.data('smfplayer', {
+					   	target : $this,
+					   	smfplayer : meplayer,
+					   	settings:settings,
+					   	mfjson:mfjson,
+					   	mfreplay:true,//replay the mf when the video starts, but the mf will only be replayed once
+						mfclearafterreplay:false, //used for playmfonce to clear fragment after replaying
 						setPositionLock:false //sometimes the setPostion(position) will set a currentTime that around the actual 'position'. If this happens, the timeupdate event should not trigger setPosition again when the position > currentTime
 				   });
-		        }
-		    });
-		    
+				}
+			});
+			
 		},
 		destroy : function( ) {
 	
-	       return this.each(function(){
+		   return this.each(function(){
 	
-	         var $this = $(this),
-	             data = $this.data('smfplayer');
+			 var $this = $(this),
+				 data = $this.data('smfplayer');
 	
-	         // Namespacing FTW
-	         //if(data!==undefined)
-	         //	data.smfplayer.remove();
-	         
-	         $(window).unbind('.smfplayer');
-	         $this.removeData('smfplayer');
-	         $this.empty();
-	       });
+			 // Namespacing FTW
+			 //if(data!==undefined)
+			 //	data.smfplayer.remove();
+			 
+			 $(window).unbind('.smfplayer');
+			 $this.removeData('smfplayer');
+			 $this.empty();
+		   });
 	
-	    }
+		}
   };
   
   var getMfjsonLazy=function(mfjson)
@@ -638,9 +638,9 @@
 	   	
 	   	if(!$.isEmptyObject(mfjson.hash.t)) //currently, only support npt
 	   	{
-	       	var tObj = smfplayer.utils.getTemporalMF(mfjson.hash.t[0]);
-	       	st = tObj.st;
-	       	et = tObj.et;
+		   	var tObj = smfplayer.utils.getTemporalMF(mfjson.hash.t[0]);
+		   	st = tObj.st;
+		   	et = tObj.et;
 	   	}
 	   	
 	   	var xywh = {};
@@ -649,16 +649,16 @@
 	   	
 	   	return {st:st,et:et,xywh:xywh}
   };
-    
+	
   $.fn.smfplayer = function( method ) {
-    
-	    if ( methods[method] ) {
-	      return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
-	    } else if ( typeof method === 'object' || ! method ) {
-	      return methods.init.apply( this, arguments );
-	    } else {
-	      $.error( 'Method ' +  method + ' does not exist on jQuery.smfplayer' );
-	    }    
+	
+		if ( methods[method] ) {
+		  return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+		  return methods.init.apply( this, arguments );
+		} else {
+		  $.error( 'Method ' +  method + ' does not exist on jQuery.smfplayer' );
+		}	
   };
 	
 })(jQuery);
