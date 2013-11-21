@@ -212,6 +212,23 @@
 			    	$("#mf_dyn_btn").click(function(){
 				    	player_dyn.playmf();
 			    	});
+			    	$("#mfonce_dyn_btn").click(function(){
+				    	player_dyn.playmfonce(90, 93, 40, 10, 40, 60);
+			    	});
+			    	$("#setmf_dyn_btn").click(function(){
+                        console.log("Setting media fragment: before:")
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+				    	player_dyn.setMF(90, 93, 40, 10, 40, 60);
+                        console.log("Setting media fragment: after:")
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+			    	});
+			    	$("#resetmf_dyn_btn").click(function(){
+                        console.log("Resetting media fragment: before:")
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+				    	player_dyn.clearMF();
+                        console.log("Resetting media fragment: after:")
+                        console.log($('#player_dyn_div').smfplayer().getMFJson());
+			    	});
 			    	$("#options_dyn_div").text(player_dyn.getOptions().mfURI).show();
 			    }
     	});
@@ -292,6 +309,9 @@
 		        	<button class="btn" id="play_dyn_btn">Play</button>
 		        	<button class="btn" id="pause_dyn_btn">Pause</button>
 		        	<button class="btn" id="mf_dyn_btn">Play MF</button>
+		        	<button class="btn" id="mfonce_dyn_btn">Play MF once</button>
+		        	<button class="btn" id="setmf_dyn_btn">Set MF</button>
+		        	<button class="btn" id="resetmf_dyn_btn">Clear MF</button>
 		        	<div style="display:inline;">CurrentTime:<span id="currenttime_dyn_span"></span></div>
 	        	</div>
 	        	<div id="options_dyn_div" style="display:none"></div>

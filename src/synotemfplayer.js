@@ -77,6 +77,24 @@
 					
 				data.mfreplay = true;
 			};
+
+            //Play media fragment, then clear it when done (optionally set MF dynamically first)
+            this.playmfonce = function(st, et, x, y, w, h) {
+				var data = $(this).data('smfplayer');
+				if(data === undefined)
+				{
+					setTimeout(function(){self.playmfonce()}, 100);
+					return;
+				}
+
+                if(arguments.length) {
+                    self.setMF(st, et, x, y, w, h);
+                }
+                self.playmf();
+                //Clear fragment when outside fragment period
+                data.mfclearafterreplay = true;
+            }
+
 			this.showxywh = function(xywh)
 			{
 				if(VERBOSE)
@@ -252,12 +270,24 @@
                     }]
                 }
                 if(x !== undefined && x >= 0 && y !== undefined && y >= 0) {
-				    $(this).data('smfplayer').mfjson.hash.xywh = [{
+                    $(this).data('smfplayer').mfjson.hash.xywh = [{
                         'unit':spaceUnit,
                         'x':x, 'y':y, 'w':w, 'h':h
                     }]
                 }
 			};
+
+            //clears the Media fragment regardless if playing it or not
+            this.clearMF = function()
+            {
+                if($(this).data('smfplayer') === undefined) {
+                    return false;
+                }
+                $(this).data('smfplayer').mfreplay = false;
+                $(this).data('smfplayer').mfjson.hash = {};
+                self.hidexywh();
+                return true;
+            }
 			
 			//get the original mejs player
 			this.getMeplayer = function()
@@ -404,21 +434,26 @@
 						        
 						        if(data.mfreplay === true || settings.mfAlwaysEnabled === true)
 						        {
-						           
 						            if(currentTime>et)
 						            {
-							            mediaElement.pause();
-							            self.setPosition(et*1000);
-							            data.mfreplay = false;
+                                        mediaElement.pause();
+                                        if(data.mfclearafterreplay) {
+                                            self.clearMF();
+                                            data.mfclearafterreplay = false;
+                                        } else {
+                                            self.setPosition(et*1000);
+                                        }
+                                        data.mfreplay = false;
 						            }
 						            else if(currentTime < st)
 						            {
-							            if(data.setPositionLock === false)
-							            {
-							            	//console.log("false:"+currentTime);
-							            	self.setPosition(st*1000);
-							            	data.setPositionLock = true;
-							            }
+                                        if(data.mfclearafterreplay) {
+                                            self.clearMF();
+                                            data.mfclearafterreplay = false;
+                                        } else if(data.setPositionLock === false) {
+                                            self.setPosition(st*1000);
+                                            data.setPositionLock = true;
+                                        }
 						            }
 						        }
 					        }
@@ -449,6 +484,10 @@
 						            	self.setPosition(st*1000);
 						            	data.setPositionLock = true;
 						            }
+                                    if(data.mfclearafterreplay) {
+                                        self.clearMF();
+                                        data.mfclearafterreplay = false;
+                                    }
 					            }
 					            else if(currentTime>et)
 					            {
@@ -460,6 +499,10 @@
 						            	mediaElement.pause();
 						            	data.mfreplay = false;
 						            }
+                                    if(data.mfclearafterreplay) {
+                                        self.clearMF();
+                                        data.mfclearafterreplay = false;
+                                    }
 					            }
 					        }
 					        
@@ -562,6 +605,7 @@
 			           	settings:settings,
 			           	mfjson:mfjson,
 			           	mfreplay:true,//replay the mf when the video starts, but the mf will only be replayed once
+                        mfclearafterreplay:false, //used for playmfonce to clear fragment after replaying
 						setPositionLock:false //sometimes the setPostion(position) will set a currentTime that around the actual 'position'. If this happens, the timeupdate event should not trigger setPosition again when the position > currentTime
 				   });
 		        }
