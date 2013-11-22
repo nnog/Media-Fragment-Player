@@ -216,20 +216,53 @@
 						player_dyn.playmfonce(90, 93, 40, 10, 40, 60);
 					});
 					$("#setmf_dyn_btn").click(function(){
-						console.log("Setting media fragment: before:")
-						console.log($('#player_dyn_div').smfplayer().getMFJson());
 						player_dyn.setMF(90, 93, 40, 10, 40, 60);
-						console.log("Setting media fragment: after:")
-						console.log($('#player_dyn_div').smfplayer().getMFJson());
 					});
 					$("#resetmf_dyn_btn").click(function(){
-						console.log("Resetting media fragment: before:")
-						console.log($('#player_dyn_div').smfplayer().getMFJson());
 						player_dyn.clearMF();
-						console.log("Resetting media fragment: after:")
-						console.log($('#player_dyn_div').smfplayer().getMFJson());
 					});
 					$("#options_dyn_div").text(player_dyn.getOptions().mfURI).show();
+				}
+
+				//dynamically setting mfjson (#t=00:01:30,00:01:33&xywh=40,220,200,50)
+				var mfuri_bbb_full = "http://mirrorblender.top-ix.org/peach/bigbuckbunny_movies/big_buck_bunny_480p_h264.mov";
+				var player_dyn2 = $("#player_dyn2_div").smfplayer({
+					mfURI:mfuri_bbb_full, 
+					mfAlwaysEnabled:false,
+					autoStart:false,
+					width:480,
+					height:320,
+					success:function(mediaElement,domObject,p){
+						mediaElement.addEventListener('timeupdate', function(e){
+							var ct = mediaElement.currentTime;
+							$("#currenttime_dyn2_span").text(ct);
+						});
+					}
+				});
+								
+				if(player_dyn2 !== undefined)
+				{
+					playerArr.push(player_dyn2);
+					$("#controls_dyn2_div").show();	
+					$("#pause_dyn2_btn").click(function(){
+						player_dyn2.pause();
+					});
+					$("#play_dyn2_btn").click(function(){
+						player_dyn2.play();
+					});
+					$("#mf_dyn2_btn").click(function(){
+						player_dyn2.playmf();
+					});
+					$("#mfonce_dyn2_btn").click(function(){
+						player_dyn2.playmfonce(20, 23, 40, 10, 40, 60);
+					});
+					$("#setmf_dyn2_btn").click(function(){
+						player_dyn2.setMF(20, 23, 40, 10, 40, 60);
+					});
+					$("#resetmf_dyn2_btn").click(function(){
+						player_dyn2.clearMF();
+					});
+					$("#options_dyn2_div").text(player_dyn2.getOptions().mfURI).show();
 				}
 		});
 	</script>
@@ -315,6 +348,24 @@
 					<div style="display:inline;">CurrentTime:<span id="currenttime_dyn_span"></span></div>
 				</div>
 				<div id="options_dyn_div" style="display:none"></div>
+		  	</div>
+		</div>
+		<h2>Big Buck Bunny mov - Dynamically Setting MFJson</h2>
+		<div class="row-fluid">
+			<div class="span11 offset1">
+				<div id="player_dyn2_div">
+					
+				</div>
+				<div id="controls_dyn2_div" style="display:none;">
+					<button class="btn" id="play_dyn2_btn">Play</button>
+					<button class="btn" id="pause_dyn2_btn">Pause</button>
+					<button class="btn" id="mf_dyn2_btn">Play MF</button>
+					<button class="btn" id="mfonce_dyn2_btn">Play MF once</button>
+					<button class="btn" id="setmf_dyn2_btn">Set MF</button>
+					<button class="btn" id="resetmf_dyn2_btn">Clear MF</button>
+					<div style="display:inline;">CurrentTime:<span id="currenttime_dyn2_span"></span></div>
+				</div>
+				<div id="options_dyn2_div" style="display:none"></div>
 		  	</div>
 		</div>
 	</div> <!-- /container -->
