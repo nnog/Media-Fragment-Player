@@ -118,6 +118,10 @@
 				if( $.isEmptyObject(xywh) || data.settings.spatialEnabled !== true)
 					return;
 				
+                //Grab current player size
+                data.settings.width = $('.mejs-mediaelement', self).width();
+                data.settings.height = $('.mejs-mediaelement', self).height();
+
 				var spatial_div;
 				if(data.settings.xywhoverlay === undefined) //the overlay hasn't been created
 				{			
@@ -125,7 +129,8 @@
 				   	//var cssStr = "top:"+x+";left:"+y+";width:"+w+";height:"+h+";";
 				   	spatial_div = $("<div/>");
 				   	spatial_div.css(data.settings.spatialStyle);
-				   	spatial_div.addClass('smfplayer-overlay').appendTo(this);
+                    //render overlay on on the bottom of mejs-layers (closest to video, play button is above)
+				   	spatial_div.addClass('smfplayer-overlay').prependTo($('.mejs-layers', this));
 	
 				   	data.settings.xywhoverlay =  spatial_div;
 				}
